@@ -1,20 +1,30 @@
 import React from "react";
-import WeatherReport from "./weather";
+import WeatherReport from "./WeatherReport";
 
 type ForecastState = {
     latitude: number;
     longitude: number;
     apiUrl: string;
     apiKey: string;
-    temperature: number;
+    temp: number
 };
 
 class Weather extends React.Component<{}, ForecastState> {
-    componentDidMount() {
-        this.setState({
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            latitude: 0,
+            longitude: 0,
+            temp: 0,
             apiKey: "16bfd0882021f8b50da9acac7d8ee70d",
-            temperature: 0,
-        });
+            apiUrl: ""
+        }
+    }
+    componentDidMount() {
+        // this.setState({
+        //     apiKey: "16bfd0882021f8b50da9acac7d8ee70d",
+        //     temp: 0,
+        // });
 
         this.setLoc();
     }
@@ -36,21 +46,26 @@ class Weather extends React.Component<{}, ForecastState> {
             })
             .then((weather) => {
                 this.setState({
-                    temperature: weather.main.temp,
+                    temp: weather.main.temp,
                 });
-                console.log(weather);
+                console.log(this.state.temp)
+                console.log(weather.main);
             })
             .catch((error) =>
                 console.log("error:", error));
     };
 
     render() {
+        console.log(typeof this.state.temp)
         return (
             <div className="App-header">
                 <h2>Local Temps</h2>
                 <div>
                     <button onClick={this.getWeather}>Click to see Forecast</button>
-                    <WeatherReport temperature={this.state.temperature} />
+                    <WeatherReport temperature={this.state.temp} />
+                    <h1>
+                        {this.state.temp > 0 ? this.state.temp : null}
+                    </h1>
                 </div>
             </div>
         );

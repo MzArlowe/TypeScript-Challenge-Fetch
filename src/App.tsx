@@ -1,11 +1,11 @@
 import React from 'react';
-import WeatherReport from './APIFolder/weather';
+import Weather from './APIFolder/WeatherMain';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <WeatherReport />
+      <Weather />
         
       </div>
   );
